@@ -42,6 +42,7 @@ font-weight: 600;
 const Portflio = () => {
     return (
         <Wrapper>
+            <Content>
             <PortfolioTable>
                 <TableItem>
                     <Title>Your Assets</Title>
@@ -62,12 +63,13 @@ const Portflio = () => {
                         {coins.map((coin,index)=>(
                             <div key={index}>
                                 <Coin coin={coin}/>
+                                <Divider/>
                             </div>
-
                     ))}
                     </div>
                 </Table>
             </PortfolioTable>
+            </Content>
         </Wrapper>
     );
 }
