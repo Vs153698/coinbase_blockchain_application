@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import CoinSelector from './CoinSelector';
+import Spinner from '../Spinner';
 import Tranfer from './Tranfer';
+import Recieve from './Recieve';
 const Wrapper = styled.div`
 height: 35rem;
 width: 27rem;
@@ -27,9 +30,17 @@ font-weight: 600;
     background-color:#111214;
 }
 `
-const ModelMain = styled.div``
-const TransferModal = () => {
+const ModelMain = styled.div`
+padding: 0 1.2rem;
+display: flex;
+height: 100%;
+flex-direction: column;
+justify-content: flex-end;
+`
+const TransferModal = ({ sanityToken, thirdWebTokens, Walletaddress }) => {
     const [action, setAction] = useState('send');
+    const [selectedToken, setSelectedToken] = useState(sanityToken[2])
+
     const selectedStyle = {
         color: '#3773f5',
 
@@ -37,13 +48,25 @@ const TransferModal = () => {
     const UnselectedStyle = {
         border: '1px solid #2B2b2f'
     }
-    const selectedModal = (option)=>{
+    const selectedModal = (option) => {
         switch (option) {
             case 'send':
-                return <Tranfer/>
+                return <Tranfer selectedToken={selectedToken} setAction={setAction} thirdWebTokens={thirdWebTokens} Walletaddress={Walletaddress} />
             case 'recieve':
-                return <h2>Receive</h2>
-        
+                return <Recieve selectedToken={selectedToken} setAction={setAction} Walletaddress={Walletaddress} />
+            case 'select':
+                return <CoinSelector setAction={setAction} selectedToken={selectedToken} setSelectedToken={setSelectedToken} sanityToken={sanityToken} thirdWebTokens={thirdWebTokens} Walletaddress={Walletaddress} />
+            case 'transferring':
+                return (
+                    <div style={{marginBottom:130}}>
+                        <Spinner message="Transferring..."/>
+                    </div>
+                )
+            case 'transferred':
+                return (
+                <h1 style={{ color: 'green', textAlign: 'center', marginBottom:230 }}>Transfer Complete</h1>
+                )
+
             default:
                 break;
         }
@@ -59,7 +82,7 @@ const TransferModal = () => {
                 </Option>
             </Selector>
             <ModelMain>
-            {selectedModal(action)}
+                {selectedModal(action)}
             </ModelMain>
         </Wrapper>
     );

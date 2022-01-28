@@ -56,7 +56,7 @@ font-size:0.8rem;
 text-align: center;
 `
 
-const Header = ({ Walletaddress, connectWallet }) => {
+const Header = ({ Walletaddress,sanityToken ,thirdWebTokens}) => {
     const router = useRouter()
     const customStyles = {
         content: {
@@ -69,8 +69,8 @@ const Header = ({ Walletaddress, connectWallet }) => {
             padding: 0,
             border: 'none',
         },
-        overlay:{
-            backgroundColor:'rgba(10,11,13,0.75)'
+        overlay: {
+            backgroundColor: 'rgba(10,11,13,0.75)'
         }
     }
     return (
@@ -89,7 +89,7 @@ const Header = ({ Walletaddress, connectWallet }) => {
                 </Link>
             </ButtonsContainer>
             <Modal style={customStyles} isOpen={!!router.query.transfer} onRequestClose={() => router.push('/')}>
-                <TransferModal />
+                <TransferModal sanityToken={sanityToken} Walletaddress={Walletaddress} thirdWebTokens={thirdWebTokens}/>
             </Modal>
         </Wrapper>
     );
